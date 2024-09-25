@@ -1,0 +1,10 @@
+<h1>Links shortener</h1>
+
+<%= link_to 'Shorten a new URL', new_link_path %>
+
+<h2>My links</h2>
+<ul>
+  <% @links.each do |link| %>
+    <li><%= link_to link.slug, redirect_path(link.slug) %> (<%= link_to 'details', link_path(link.slug) %>)</li>
+  <% end %>
+</ul>

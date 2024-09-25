@@ -1,0 +1,12 @@
+<h1>Link details</h1>
+
+<%= link_to 'Back to links', links_path %>
+
+<p>Original URL: <%= @link.original_url %></p>
+<p>Slug: <%= link_to @link.slug, redirect_path(@link.slug) %></p>
+<p>Clicked: <%= @link.click_count %> times</p>
+<% if @link.expires_at %>
+  <p>Expires on <b><%= @link.expires_at.strftime('%d/%m/%Y at %H:%M') %></b></p>
+<% else %>
+  <p>This link never expires</p>
+<% end %>
