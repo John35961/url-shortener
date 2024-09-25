@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  root 'links#index'
 
-  # Defines the root path route ("/")
-  # root "articles#index"
+  resources :links, only: [:new, :create, :index]
+  get '/links/:slug', to: 'links#show', as: :link
+
+  get '/redirect/:slug', to: 'links#redirect', as: :redirect
 end
