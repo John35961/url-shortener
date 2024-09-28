@@ -1,8 +1,11 @@
 Rails.application.routes.draw do
   root 'links#index'
 
-  resources :links, only: [:new, :create, :index]
-  get '/links/:slug', to: 'links#show', as: :link
+  resources :links, param: :slug, only: [:new, :create, :index, :show] do
+    collection do
+      delete :destroy_all
+    end
+  end
 
   get '/redirect/:slug', to: 'links#redirect', as: :redirect
 end
