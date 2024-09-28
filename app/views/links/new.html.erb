@@ -3,17 +3,7 @@
 <%= link_to 'Back to links', links_path %>
 
 <%= form_with model: @link, local: true do |form| %>
-  <% if @link.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@link.errors.count, "error") %> prohibited this link from being saved:</h2>
-
-      <ul>
-      <% @link.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+  <%= render 'links/shared/error_messages', link: @link %>
 
   <div class="field">
     <%= form.label :original_url %>
