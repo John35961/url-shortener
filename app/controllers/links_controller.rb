@@ -44,6 +44,9 @@ class LinksController < ApplicationController
   end
 
   def slug
+    slug = params[:link][:slug]
+    return slug if slug.present?
+
     SecureRandom.uuid[0..5]
   end
 end
