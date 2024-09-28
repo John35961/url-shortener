@@ -5,6 +5,10 @@
 <h2>My links</h2>
 <ul>
   <% @links.each do |link| %>
-    <li><%= link_to link.slug, redirect_path(link.slug) %> (<%= link_to 'details', link_path(link.slug) %>)</li>
+    <li><%= link_to link.slug, redirect_path(link.slug) %> (<%= link_to 'details', link_path(link.slug) %>) - <%= time_ago_in_words(link.created_at) %> ago</li>
   <% end %>
 </ul>
+
+<% if @links.any? %>
+  <%= button_to 'Delete all links', destroy_all_links_path, method: :delete %>
+<% end %>
