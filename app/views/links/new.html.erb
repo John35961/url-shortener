@@ -2,10 +2,10 @@
 
 <%= form_with model: @link, local: true, class: "space-y-4 max-w-md mx-auto" do |form| %>
   <% if @link.errors.any? %>
-    <div class="bg-red-100 text-red-700 p-3 rounded">
+    <div class="p-3 text-red-700 bg-red-100 rounded">
       <ul>
         <% @link.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
+        <li><%= message %></li>
         <% end %>
       </ul>
     </div>
@@ -27,6 +27,6 @@
   </div>
 
   <div>
-    <%= form.submit "Shorten", class: "bg-blue-600 text-white p-2 rounded cursor-pointer hover:bg-blue-700" %>
+    <%= form.submit "Shorten", class: "bg-blue-600 text-white font-semibold p-2 w-full rounded cursor-pointer hover:bg-blue-700" %>
   </div>
 <% end %>
