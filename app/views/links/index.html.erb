@@ -1,46 +1,52 @@
-<div class="flex justify-between items-center mb-6">
-  <h1 class="text-3xl font-bold">My links</h1>
-  <%= link_to 'Shorten a new URL', new_link_path, class: "bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded shadow" %>
-</div>
-
-<div class="overflow-x-auto mb-6">
-  <table class="min-w-full bg-white border border-gray-200 rounded-lg shadow-sm">
-    <thead>
-      <tr class="bg-gray-100 text-left">
-        <th class="px-4 py-3 border-b">Original URL</th>
-        <th class="px-4 py-3 border-b">Short URL</th>
-        <th class="px-4 py-3 border-b">Status</th>
-        <th class="px-4 py-3 border-b">Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @links.each do |link| %>
-        <tr class="hover:bg-gray-50 border-t">
-          <td class="px-4 py-3 border-b">
-            <span class="truncate">
-              <%= link.original_url %>
-            </span>
-          </td>
-          <td class="px-4 py-3 border-b">
-            <%= link_to "/#{link.slug}", redirect_path(link.slug), target: "_blank", class: "text-blue-600 hover:underline" %>
-          </td>
-          <td class="px-4 py-3 border-b">
-            <% if link.expired? %>
-              <span class="text-red-600">Expired</span>
-            <% else %>
-              <span class="text-green-600">Active</span>
-            <% end %>
-          </td>
-          <td class="px-4 py-3 border-b">
-            <%= link_to 'Details', link_path(link.slug), class: "bg-blue-500 hover:bg-blue-600 text-white font-semibold py-1 px-3 rounded shadow text-sm" %>
-            <%= link_to 'Delete', link_path(link.slug), method: :delete, data: { turbo_confirm: 'Are you sure?', turbo_method: :delete }, class: "bg-red-500 hover:bg-red-600 text-white font-semibold py-1 px-3 rounded shadow text-sm" %>
-          </td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-</div>
-
 <% if @links.any? %>
+  <div class="flex items-center justify-between mb-6">
+    <h1 class="text-3xl font-bold">My links</h1>
+    <%= link_to 'Shorten a new URL', new_link_path, class: "bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded shadow" %>
+  </div>
+  <div class="mb-6 overflow-x-auto">
+    <table class="min-w-full bg-white border border-gray-200 rounded-lg shadow-sm">
+      <thead>
+        <tr class="text-left bg-gray-100">
+          <th class="px-4 py-3 border-b">Original URL</th>
+          <th class="px-4 py-3 border-b">Short URL</th>
+          <th class="px-4 py-3 border-b">Status</th>
+          <th class="px-4 py-3 border-b">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @links.each do |link| %>
+          <tr class="border-t hover:bg-gray-50">
+            <td class="px-4 py-3 border-b">
+              <span class="truncate">
+                <%= link.original_url %>
+              </span>
+            </td>
+            <td class="px-4 py-3 border-b">
+              <%= link_to "/#{link.slug}", redirect_path(link.slug), target: "_blank", class: "text-blue-600 hover:underline" %>
+            </td>
+            <td class="px-4 py-3 border-b">
+              <% if link.expired? %>
+                <span class="text-red-600">Expired</span>
+              <% else %>
+                <span class="text-green-600">Active</span>
+              <% end %>
+            </td>
+            <td class="px-4 py-3 border-b">
+              <%= link_to 'Details', link_path(link.slug), class: "bg-blue-500 hover:bg-blue-600 text-white font-semibold py-1 px-3 rounded shadow text-sm" %>
+              <%= link_to 'Delete', link_path(link.slug), method: :delete, data: { turbo_confirm: 'Are you sure?', turbo_method: :delete }, class: "bg-red-500 hover:bg-red-600 text-white font-semibold py-1 px-3 rounded shadow text-sm" %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
   <%= link_to 'Delete all', destroy_all_links_path, method: :delete, data: { turbo_confirm: 'Are you sure?', turbo_method: :delete }, class: "bg-red-500 text-white font-semibold p-2 rounded hover:bg-red-600" %>
+<% else %>
+  <div class="flex items-center justify-center h-[calc(100vh-200px)]">
+    <div class="text-center">
+      <p class="mb-4 text-lg text-gray-600">It looks empty.</p>
+      <%= link_to 'Shorten a new URL', new_link_path, class: "bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded shadow" %>
+    </div>
+  </div>
 <% end %>
