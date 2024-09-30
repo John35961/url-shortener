@@ -1,8 +1,8 @@
 class LinksController < ApplicationController
-  before_action :set_link, only: [:show, :redirect]
+  before_action :set_link, only: [:show, :redirect, :destroy]
 
   def index
-    @links = Link.all
+    @links = Link.all.order(created_at: :desc)
   end
 
   def new
@@ -28,6 +28,15 @@ class LinksController < ApplicationController
       @link.increment!(:click_count)
     else
       redirect_to root_path, alert: 'This link has expired.'
+    end
+  end
+
+  def destroy
+    if @link
+      @link.destroy
+      redirect_to links_path, notice: 'Link was successfully deleted.'
+    else
+      redirect_to links_path, alert: 'Link not found.'
     end
   end
 
