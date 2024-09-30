@@ -1,26 +1,32 @@
-<h1>Shorten your URL</h1>
+<%= link_to '<- Back', links_path %>
 
-<%= link_to 'Back to links', links_path %>
+<%= form_with model: @link, local: true, class: "space-y-4 max-w-md mx-auto" do |form| %>
+  <% if @link.errors.any? %>
+    <div class="bg-red-100 text-red-700 p-3 rounded">
+      <ul>
+        <% @link.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
 
-<%= form_with model: @link, local: true do |form| %>
-  <%= render 'links/shared/error_messages', link: @link %>
-
-  <div class="field">
-    <%= form.label :original_url %>
-    <%= form.text_field :original_url %>
+  <div class="mb-4">
+    <%= form.label :original_url, class: "block text-lg font-medium" %>
+    <%= form.text_field :original_url, class: "mt-1 p-2 w-full border border-gray-300 rounded" %>
   </div>
 
-  <div class="field">
-    <%= form.label 'Slug (optional)' %>
-    <%= form.text_field :slug %>
+  <div class="mb-4">
+    <%= form.label 'Slug (optional)', class: "block text-lg font-medium" %>
+    <%= form.text_field :slug, class: "mt-1 p-2 w-full border border-gray-300 rounded" %>
   </div>
 
-  <div class="field">
-    <%= form.label :expires_at, 'Expiration date (optional)' %>
-    <%= form.datetime_select :expires_at %>
+  <div class="mb-4">
+    <%= form.label :expires_at, "Expiration Date (optional)", class: "block text-lg font-medium" %>
+    <%= form.datetime_select :expires_at, class: "mt-1 p-2 w-full border border-gray-300 rounded" %>
   </div>
 
-  <div class="actions">
-    <%= form.submit "Shorten!" %>
+  <div>
+    <%= form.submit "Shorten", class: "bg-blue-600 text-white p-2 rounded cursor-pointer hover:bg-blue-700" %>
   </div>
 <% end %>

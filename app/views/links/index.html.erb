@@ -1,14 +1,46 @@
-<h1>Links shortener</h1>
+<div class="flex justify-between items-center mb-6">
+  <h1 class="text-3xl font-bold">My links</h1>
+  <%= link_to 'Shorten a new URL', new_link_path, class: "bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded shadow" %>
+</div>
 
-<%= link_to 'Shorten a new URL', new_link_path %>
-
-<h2>My links</h2>
-<ul>
-  <% @links.each do |link| %>
-    <li><%= link_to link.slug, redirect_path(link.slug) %> (<%= link_to 'details', link_path(link.slug) %>) - <%= time_ago_in_words(link.created_at) %> ago</li>
-  <% end %>
-</ul>
+<div class="overflow-x-auto mb-6">
+  <table class="min-w-full bg-white border border-gray-200 rounded-lg shadow-sm">
+    <thead>
+      <tr class="bg-gray-100 text-left">
+        <th class="px-4 py-3 border-b">Original URL</th>
+        <th class="px-4 py-3 border-b">Short URL</th>
+        <th class="px-4 py-3 border-b">Status</th>
+        <th class="px-4 py-3 border-b">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @links.each do |link| %>
+        <tr class="hover:bg-gray-50 border-t">
+          <td class="px-4 py-3 border-b">
+            <span class="truncate">
+              <%= link.original_url %>
+            </span>
+          </td>
+          <td class="px-4 py-3 border-b">
+            <%= link_to "/#{link.slug}", redirect_path(link.slug), target: "_blank", class: "text-blue-600 hover:underline" %>
+          </td>
+          <td class="px-4 py-3 border-b">
+            <% if link.expired? %>
+              <span class="text-red-600">Expired</span>
+            <% else %>
+              <span class="text-green-600">Active</span>
+            <% end %>
+          </td>
+          <td class="px-4 py-3 border-b">
+            <%= link_to 'Details', link_path(link.slug), class: "bg-blue-500 hover:bg-blue-600 text-white font-semibold py-1 px-3 rounded shadow text-sm" %>
+            <%= link_to 'Delete', link_path(link.slug), method: :delete, data: { turbo_confirm: 'Are you sure?', turbo_method: :delete }, class: "bg-red-500 hover:bg-red-600 text-white font-semibold py-1 px-3 rounded shadow text-sm" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
 
 <% if @links.any? %>
-  <%= button_to 'Delete all links', destroy_all_links_path, method: :delete %>
+  <%= link_to 'Delete all', destroy_all_links_path, method: :delete, data: { turbo_confirm: 'Are you sure?', turbo_method: :delete }, class: "bg-red-500 text-white font-semibold p-2 rounded hover:bg-red-600" %>
 <% end %>

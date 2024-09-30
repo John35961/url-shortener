@@ -1,12 +1,26 @@
-<h1>Link details</h1>
+<%= link_to '<- Back', links_path %>
 
-<%= link_to 'Back to links', links_path %>
-
-<p>Original URL: <%= @link.original_url %></p>
-<p>Slug: <%= link_to @link.slug, redirect_path(@link.slug) %></p>
-<p>Clicked: <%= @link.click_count %> times</p>
-<% if @link.expires_at %>
-  <p>Expires on <b><%= @link.expires_at.strftime('%d/%m/%Y at %H:%M') %></b></p>
-<% else %>
-  <p>This link never expires</p>
-<% end %>
+<table class="min-w-full bg-white border border-gray-300 rounded-lg shadow-sm">
+  <thead>
+    <tr>
+      <th class="px-4 py-2 text-left border-b">Original URL</th>
+      <th class="px-4 py-2 text-left border-b">Short URL</th>
+      <th class="px-4 py-2 text-left border-b">Created</th>
+      <th class="px-4 py-2 text-left border-b">Clicks</th>
+      <th class="px-4 py-2 text-left border-b">Expires at</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="border-t">
+      <td class="px-4 py-2 border-b"><%= @link.original_url %></td>
+      <td class="px-4 py-2 border-b"><%= link_to "/#{@link.slug}", redirect_path(@link.slug), target: "_blank", class: "text-blue-600 hover:underline" %></td>
+      <td class="px-4 py-2 border-b"><%= time_ago_in_words(@link.created_at) %> ago</td>
+      <td class="px-4 py-2 border-b"><%= @link.click_count %></td>
+      <% if @link.expires_at %>
+        <td class="px-4 py-2 border-b"><%= @link.expires_at.strftime('%d/%m/%Y at %H:%M') %></td>
+      <% else %>
+        <td class="px-4 py-2 border-b">This link never expires</td>
+      <% end %>
+    </tr>
+  </tbody>
+</table>
