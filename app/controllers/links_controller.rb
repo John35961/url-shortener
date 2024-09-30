@@ -1,9 +1,8 @@
 class LinksController < ApplicationController
   before_action :set_link, only: [:show, :redirect, :destroy]
+  before_action :set_links, only: [:index, :destroy_all]
 
-  def index
-    @links = Link.all.order(created_at: :desc)
-  end
+  def index; end
 
   def new
     @link = Link.new
@@ -40,6 +39,12 @@ class LinksController < ApplicationController
     end
   end
 
+  def destroy_all
+    @links.destroy_all
+
+    redirect_to links_path, notice: 'All links were successfully deleted.'
+  end
+
   private
 
   def link_params
@@ -50,6 +55,10 @@ class LinksController < ApplicationController
     @link = Link.find_by(slug: params[:slug])
 
     redirect_to root_path, alert: 'Link not found.' if @link.nil?
+  end
+
+  def set_links
+    @links = Link.all.order(created_at: :desc)
   end
 
   def slug
